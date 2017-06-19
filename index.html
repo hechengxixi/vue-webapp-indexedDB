@@ -19,7 +19,8 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script type="text/javascript">
-    	var localDatabase = window.indexedDB = window.indexedDB || window.mozIndexedDB  || window.webkitIndexedDB  || window.msIndexedDB;
+    var localDatabase = {};
+	localDatabase.indexedDB = window.indexedDB = window.indexedDB || window.mozIndexedDB  || window.webkitIndexedDB  || window.msIndexedDB;
     </script>
   </body>
 </html>
