@@ -1,19 +1,18 @@
 <template>
-	<div>
-		<nav class="clearFix">
+	<div class="fixed-container">
+		<nav class="clearFix top-fixed">
 			<span class="float-left">
-				<router-link to="/" tag="span">首页</router-link>
+				<router-link to="/" tag="span"><span class="icon-home"></span></router-link>
 			</span>
 			
-			<a @click="onSaveClick" class="float-right">保存</a>
+			<a @click="onSaveClick" class="float-right icon-save"></a>
 		</nav>
-		<div class='text-left'>
+		<div class='text-left m-top'>
 			<p  contentEditable=true id="title-edit" v-html="title"></p>
 			<hr>
 			<div  contentEditable=true id="content-edit" v-html="content"></div>
 		</div>
 	</div>
-	
 </template>
 <script>
 	import indexedDB from '../indexedDB'
@@ -59,12 +58,12 @@
         }
 	}
 </script>
-<style type="text/css">
+<style lang="scss">
 	[contentEditable=true]{
 		min-height:30px;
 		border:none;
-	}
-	[contentEditable=true]:focus{
+		&:focus{
 		 outline: none;
+		}
 	}
 </style>

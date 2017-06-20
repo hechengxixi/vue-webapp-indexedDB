@@ -131,10 +131,36 @@ export default {
   			response = e.target.result;
       	}
 	},
-	deleteDatabase (dbName) {
+	deleteList (dbName, id,successCallBack) {
+		var response = null;
+		var transaction = localDatabase.db.transaction([dbName], "readwrite");
+    
+	      // report on the success of opening the transaction
+	      transaction.oncomplete = function() {
+	        console.log('Transaction completed: database delete finished.');
+
+	        // update the display of data to show the newly added item, by running displayData() again.
+	        successCallBack.call();
+	      };
+
+	      transaction.onerror = function() {
+	        console.log('Transaction not opened due to error: ' + transaction.error);
+	      };
+
+      	// call an object store that's already been added to the database
+      	var objectStore = transaction.objectStore(dbName);
+      	var objectStoreGetRequest = objectStore.delete(String(id));
+      	objectStoreGetRequest.onsuccess = function(e) {
+      		 // Grab the data object returned as the result
+      		 console.log('delete success')
+      	}
+
+	},
+	deleteDatabase (dbName, successCallBack) {
 	   var deleteDbRequest = localDatabase.indexedDB.deleteDatabase(dbName);
 	   deleteDbRequest.onsuccess = function (event) {
 	      // database deleted successfully
+	      successCallBack.call();
 	      console.log('Database delete success')
 	   };
 	   deleteDbRequest.onerror = function (e) {

@@ -1,14 +1,14 @@
 <template>
-<div>
-	<nav class="clearFix">
+<div class="fixed-container">
+	<nav class="clearFix top-fixed">
 		<span class="float-right">
-			<router-link :to="{name:'edit'}" tag="span" exact>添加</router-link>
+			<router-link :to="{name:'edit'}" tag="span" exact><span class="icon-pen"></span></router-link>
 		</span>
 	</nav>
     <ul class='text-left'>
-		<li v-for="(note, i) in list" v-bind:key="i" @click="onListClick(note.id)">
-			<h3 v-text="note.title"></h3>
-			<p v-text="note.content"></p>
+		<li v-for="(note, i) in list" v-bind:key="i" @click="onListClick(note.id)" @touchmove="onTouchmove" @touchend="onTouchend($event, note.id)" @touchstart="onTouchstart" class="border-left list-item">
+			<h3 v-html="note.title" class="text-ellipsis single-line"></h3>
+			<p v-html="note.content" class="text-ellipsis single-line text-indent m-bottom"></p>
 			<hr/>
 		</li>
 	</ul>
@@ -21,6 +21,7 @@
 	export default {
 		data () {
 			return {
+				touchstartPoint:0,
 				list: []
 			}
 		},
@@ -31,6 +32,31 @@
 			},
 			onListClick (id) {
 				this.$router.push('edit?id='+id)
+			},
+			onTouchstart (e) {
+				if( e.targetTouches.length === 1){
+					this.touchstartPoint = e.targetTouches[0].pageX;
+				}
+				return false;
+			},
+			onTouchmove (e) {
+				if( e.targetTouches.length === 1){
+					var target = e.target.tagName === 'LI' ? e.target : e.target.parentElement;
+					target.style.transform = "translate("+(e.targetTouches[0].pageX-this.touchstartPoint)+"px)"
+				}
+				
+			},
+			onTouchend (e, id) {
+				var vm = this;
+				var target = e.target.tagName === 'LI' ? e.target : e.target.parentElement;
+				if(e.changedTouches.length === 1 && e.changedTouches[0].pageX-this.touchstartPoint>=100){
+					indexedDB.deleteList('toDoList',id, function () {
+						vm.fetchList();
+					})
+				}
+				this.touchstartPoint = 0;
+				target.style.transform = "translate("+(this.touchstartPoint)+"px)";
+
 			}
 		},
 		mounted(){
@@ -47,16 +73,5 @@
 	ul{
 		max-height: 100%;
 	}
-
-	.clearFix:after{
-		display:block;
-		content:'';
-		clear: both;
-	}
-	.float-left{
-		float:left;
-	}
-	.float-right{
-		float:right;
-	}
+	
 </style>
