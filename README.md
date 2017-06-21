@@ -1,6 +1,6 @@
 # vue-webapp-indexedDB
 
-> A Vue.js project
+> A Vue.js project, use vuejs, vue-router, indexedDB, sass
 
 ## Build Setup
 
