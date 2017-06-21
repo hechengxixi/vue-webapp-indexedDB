@@ -16,11 +16,16 @@ export default {
 $fixed-height: 32px;
 $base-fontsize:16px;
 $base-border-color: rgba(225,147,89,0.5);
-$icon-list: home, save, pen;
+$icon-list: home, save, pen, title, content;
 $dir-list: top, bottom, left, right;
 @each $icon in $icon-list {
   .icon-#{$icon}:before{
+    width:$base-fontsize*2;
+    height:$base-fontsize*2;
+    display:inline-block;
+    vertical-align:middle;
     content:url('./assets/#{$icon}.png');
+    margin:0 5px 0 5px;
   }
 }
 *{
@@ -30,12 +35,8 @@ body, p{
   margin:0;
   padding:0;
 }
-hr{
-  margin-top:0;
-  color: $base-border-color;
-  background-color: $base-border-color;
-  border:none;
-  height:1px;
+.list-item{
+  border-bottom:1px solid $base-border-color;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -52,6 +53,10 @@ hr{
   display:block;
   content:'';
   clear: both;
+}
+.clearMargin:before{
+   display:table;
+  content:'';
 }
 .float-left{
   float:left;
@@ -84,13 +89,22 @@ hr{
     margin-#{$dir}:10px;
   }
 }
+@each $dir in $dir-list {
+  .p-#{$dir}{
+    padding-#{$dir}:10px;
+  }
+}
 .text-ellipsis{
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis; 
 }
 .single-line{
-  max-height:$base-fontsize;
+  height:$base-fontsize*2;
+  line-height:$base-fontsize*2;
+}
+.half-single-line{
+  height:$base-fontsize;
   line-height:$base-fontsize;
 }
 .text-indent{
@@ -114,5 +128,10 @@ hr{
 }
 .slide-enter, .slide-leave-active {
   opacity: 0;
+}
+.middle-line{
+  margin:5px 0 5px $base-fontsize;
+
+  border-left:1px solid #aaa;
 }
 </style>

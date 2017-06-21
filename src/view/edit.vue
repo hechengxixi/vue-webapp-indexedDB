@@ -7,10 +7,10 @@
 			
 			<a @click="onSaveClick" class="float-right icon-save"></a>
 		</nav>
-		<div class='text-left m-top'>
-			<p  contentEditable=true id="title-edit" v-html="title"></p>
+		<div class='text-left m-top clearMargin'>
+			<p  contentEditable=true id="title-edit" class="m-left m-top" v-html="title"></p>
 			<hr>
-			<div  contentEditable=true id="content-edit" v-html="content"></div>
+			<div  contentEditable=true id="content-edit" class="m-left" v-html="content"></div>
 		</div>
 	</div>
 </template>
@@ -31,16 +31,21 @@
 					title: document.getElementById('title-edit').innerHTML,
 					content: document.getElementById('content-edit').innerHTML
 				}
-				if(vm.id){
-					params.id = vm.id;
-					indexedDB.updateList('toDoList', params, function (){
-						vm.$router.push('/')
-					})
+				if(params.title && params.content){
+					if(vm.id){
+						params.id = vm.id;
+						indexedDB.updateList('toDoList', params, function (){
+							vm.$router.push('/')
+						})
+					}else{
+						indexedDB.createList('toDoList', params, function (){
+							vm.$router.push('/')
+						})
+					}
 				}else{
-					indexedDB.createList('toDoList', params, function (){
-						vm.$router.push('/')
-					})
+					alert('标题或内容不能为空！')
 				}
+				
 				
 			}
 		},

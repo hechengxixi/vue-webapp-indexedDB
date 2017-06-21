@@ -21,17 +21,6 @@
     <script type="text/javascript">
     var localDatabase = {};
     localDatabase.indexedDB = window.indexedDB = window.indexedDB || window.mozIndexedDB  || window.webkitIndexedDB  || window.msIndexedDB;
-
-    window.addEventListener('load', function () {
-      //window.applicationCache.update();
-      window.applicationCache.addEventListener('updateready', function(e) {
-        console.log('window.applicationCache update')
-        if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-         window.applicationCache .swapCache();
-            window.location.reload();
-        }
-      }, false);  
-    })
     
     </script>
   </body>

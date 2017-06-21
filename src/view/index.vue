@@ -6,10 +6,10 @@
 		</span>
 	</nav>
     <ul class='text-left'>
-		<li v-for="(note, i) in list" v-bind:key="i" @click="onListClick(note.id)" @touchmove="onTouchmove" @touchend="onTouchend($event, note.id)" @touchstart="onTouchstart" class="border-left list-item">
-			<h3 v-html="note.title" class="text-ellipsis single-line"></h3>
-			<p v-html="note.content" class="text-ellipsis single-line text-indent m-bottom"></p>
-			<hr/>
+		<li v-for="(note, i) in list" v-bind:key="i" @click="onListClick(note.id)" @touchmove="onTouchmove" @touchend="onTouchend($event, note.id)" @touchstart="onTouchstart" class="border-left list-item p-left m-bottom">
+			<p v-html="note.title" class="text-ellipsis single-line icon-title"></p>
+			<p class="half-single-line middle-line"></p>
+			<p v-html="note.content" class="text-ellipsis single-line icon-content"></p>
 		</li>
 	</ul>
 </div>
